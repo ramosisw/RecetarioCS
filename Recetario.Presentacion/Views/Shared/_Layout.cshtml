@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewBag.Title</title>
+    <!-- site css -->
+    @Styles.Render("~/Content/css/bootstrap.min.css")
+    @Styles.Render("~/Content/css/bootflat.css")
+    @Styles.Render("~/Content/css/aplication.css")
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+        @Scripts.Render("~/Scripts/html5shiv.js")
+        @Scripts.Render("~/Scripts/respond.min.js")
+        <![endif]-->
+</head>
+<body>
+    <h1 class="hidden">Recetario</h1>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Recetario</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Receta/Index">Recetario</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <h2 class="hidden">Menu</h2>
+                <ul class="nav navbar-nav">
+                    <li><a href="~/Receta/Index">Inicio</a></li>
+                    <li><a href="~/Receta/Nueva">Nueva</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        @RenderBody()
+    </div>
+    <footer id="footer" class="bg-primary" style="margin-top: 50px;">
+        <div class="container">
+            <p class="text-center"><b>Recetario® | ISW | CECE | OpIV | 2014</b></p>
+        </div>
+    </footer>
+    @Scripts.Render("~/Scripts/jquery-1.10.1.min.js")
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @Scripts.Render("~/Scripts/bootstrap-wysiwyg.js")
+    @Scripts.Render("~/Scripts/jquery.fs.selecter.min.js")
+    @Scripts.Render("~/Scripts/jquery.fs.stepper.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+    <script type="text/javascript">
+        $.validator.setDefaults({
+            highlight: function (element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).addClass(errorClass).removeClass(validClass);
+                } else {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                }
+                console.log("err");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).removeClass(errorClass).addClass(validClass);
+                } else {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                }
+                console.log("not err");
+            }
+        });
+
+        $(function () {
+            $("span.field-validation-valid, span.field-validation-error").addClass('help-block');
+            $("div.form-group").has("span.field-validation-error").addClass('has-error');
+            $("div.validation-summary-errors").has("li:visible").addClass("alert alert-block alert-danger");
+        });
+
+    </script>
+    @Scripts.Render("~/Scripts/aplication.js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,134 @@
+﻿@model Recetario.Nucleo.Entidades.Receta
+
+@{
+    ViewBag.Title = "Recetario | Nueva";
+   
+}
+
+
+@using (Html.BeginForm("Nueva", "Receta", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationMessage("Receta")
+    <h2 class="text-primary text-center">Nueva Receta</h2>
+    <div class="col-sm-12 col-md-8 col-md-offset-2">
+        <h3 class="text-info">Datos principales </h3>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Nombre, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre" })
+                @Html.ValidationMessageFor(m => m.Nombre, String.Empty, new { @class = "help-block" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Descripcion, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control", placeholder = "Descripción" })
+                @Html.ValidationMessageFor(m => m.Descripcion, String.Empty, new { @class = "help-block" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Porciones, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-2">
+                @Html.TextBoxFor(m => m.Porciones, new { @class = "form-control", type = "number", min = "1", max = "20", step = "1", value = "1" })
+            </div>
+            @Html.ValidationMessageFor(m => m.Porciones, String.Empty, new { @class = "help-block" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Imagen, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                <input type="file" accept="image/x-png, image/gif, image/jpeg" name="Imagen" class="form-control filestyle" data-input="false" data-classbutton="btn btn-primary" data-buttontext="Agrega una Imagen">
+            </div>
+        </div>
+        <h3 class="text-info">Ingredientes</h3>
+        <section id="form-nueva-receta-ingredientes">
+            @if (Model != null && Model.Ingredientes != null && Model.Ingredientes.Count > 0) {
+                for (var i = 0; i < Model.Ingredientes.Count(); i++) {
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(m => m.Ingredientes[i].Cantidad, new { @class = "form-control", placeholder = "cantidad" })
+                        @Html.ValidationMessageFor(m => m.Ingredientes[i].Cantidad, String.Empty, new { @class = "help-block" })
+                    </div>
+
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(m => m.Ingredientes[i].Nombre, new { @class = "form-control", placeholder = "nombre" })
+                        @Html.ValidationMessageFor(m => m.Ingredientes[i].Nombre, String.Empty, new { @class = "help-block" })
+                    </div>
+                    <div class="col-sm-1">
+                        <a class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Haz click aquí para quitar un ingrediente"><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                </div>
+                }
+            } else {
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <input type="text" name="Ingredientes[0].Cantidad" class="form-control " placeholder="cantidad">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <input class="form-control " name="Ingredientes[0].Nombre" placeholder="Escribe el ingrediente">
+                    </div>
+                    <div class="col-sm-1">
+                        <a class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Haz click aquí para quitar un ingrediente"><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                </div>
+            }
+        </section>
+        <div class="form-group">
+            <div class="col-sm-3 col-sm-offset-9 col-xs-6 col-xs-offset-6">
+                <a class="btn btn-info pull-right form-control" id="form-nueva-receta-add-ingrediente" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Haz clic aquí para agegar otro ingrediente"><span class="glyphicon glyphicon-plus"></span>Ingrediente</a>
+            </div>
+        </div>
+        <h3 class="text-info">Elaboración (pasos a seguir)</h3>
+        <p class="text-primary">Favor de redactar la receta paso a paso para el entendimiento de los demás</p>
+        <section id="form-nueva-receta-procedimientos">
+            @if (Model != null && Model.Pasos != null && Model.Pasos.Count > 0) {
+                for (var i = 0; i < Model.Pasos.Count(); i++) {
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        @Html.LabelFor(m => m.Pasos, new { @class = "col-sm-6 control-label" })
+                        <div class="col-xs-6">
+                            @Html.TextBoxFor(m => m.Pasos[i].Numero, new { @class = "form-control", type = "number", min = "1", step = "1" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Pasos[i].Numero, String.Empty, new { @class = "help-block" })
+                    </div>
+                    <div class="col-sm-7">
+                        @Html.TextAreaFor(m => m.Pasos[i].Descripcion, new { @class = "form-control", rows = "3" })
+                        @Html.ValidationMessageFor(m => m.Pasos[i].Descripcion, String.Empty, new { @class = "help-block" })
+                    </div>
+                    <div class="col-sm-1">
+                        <a class="btn btn-danger btn-xs remove" data-toggle="tooltip" data-placement="bottom" title="Haz clic aquí para quitar este paso "><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                </div>
+                }
+            } else {
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        @Html.LabelFor(m => m.Pasos, new { @class = "col-sm-6 control-label" })
+                        <div class="col-xs-6">
+                            <input class="form-control" name="Pasos[0].Numero" type="number" min="1" step="1" value="1" />
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <textarea class="form-control" rows="3" name="Pasos[0].Descripcion" placeholder="Descripción..."></textarea>
+                    </div>
+                    <div class="col-sm-1">
+                        <a class="btn btn-danger btn-xs remove" data-toggle="tooltip" data-placement="bottom" title="Haz clic aquí para quitar este paso "><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                </div>
+            }
+        </section>
+        <div class="form-group">
+            <div class="col-sm-3 col-sm-offset-9 col-xs-6 col-xs-offset-6">
+                <a class="btn btn-info pull-right form-control" id="form-nueva-receta-add-paso" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Haz clic aquí para agregar paso"><span class="glyphicon glyphicon-plus"></span>Paso</a>
+            </div>
+        </div>
+        <input class="btn btn-success" name="enviar" type="submit" value="Publicar Receta" id="enviar">
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/bootstrap-filestyle.min.js")
+    @Scripts.Render("~/Scripts/jquery.fs.stepper.min.js")
+    @Scripts.Render("~/Scripts/bootstrap-wysiwyg.js")
+}

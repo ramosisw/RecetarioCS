@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Recetario.Nucleo.Entidades.Ingrediente, Recetario.Nucleo" table="Ingrediente" lazy="false">
+    <id name="Id" type="int">
+      <column name="id"/>
+      <generator class="identity" />
+    </id>
+    <property name="Nombre" type="string">
+      <column name="nombre"/>
+    </property>
+    <property name="Cantidad" type="string">
+      <column name="cantidad"/>
+    </property>
+  </class>
+</hibernate-mapping>
